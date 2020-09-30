@@ -18,7 +18,7 @@ public class MyTweetApi extends RestAPI {
 
     //https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline
     private final String GET_USER_TWEET_ENDPOINT = "/statuses/user_timeline.json";
-
+ // /statuses/user_timeline.json
 
     // GET ALL Tweet Information
     public ValidatableResponse getUserTimeTweet() {
@@ -43,12 +43,19 @@ public class MyTweetApi extends RestAPI {
                 .then();
     }
 
-    // Create a List of tweets from user's twitter with EXCEL SHEET
+    // Create a List of tweets from user's twitter with EXCEL SHEETgit
     public ValidatableResponse createListTweets(String Flights) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .param("status", Flights)
                 .when().post(this.baseUrl + this.CREATE_TWEET_ENDPOINT)
                 .then();
+    }
+    public ValidatableResponse getMyUserTimeTweet(long id) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .param("in_reply_to_status_id",id)
+                .when().get(this.baseUrl + this.GET_USER_TWEET_ENDPOINT)
+                .then();
+
     }
 //******************Open Weather **********************
 

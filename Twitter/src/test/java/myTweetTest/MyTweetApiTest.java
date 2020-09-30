@@ -61,12 +61,37 @@ public class MyTweetApiTest {
         Assert.assertEquals(tweet,actualTweet);
     }
     @Test
+    public void testUserCanNotTweetTheSameTweetTwiceInARow1(){
+        String tweet="Azul Felawen  "+ UUID.randomUUID().toString();
+        ValidatableResponse response=this.myTweetApi.createTweet(tweet);
+        response.statusCode(200);
+        String actualTweet=response.extract().body().path("text");
+        Assert.assertEquals(tweet,actualTweet);
+        response=this.myTweetApi.createTweet(tweet);
+        response.statusCode(403);
+        String expectedMessage="Status is a duplicate.";
+        String actualMessage=response.extract().body().path("errors[0].message");
+        Assert.assertEquals(actualMessage,expectedMessage);
+    }
+
+    @Test
+    public void getMyUserTimeTweetTest(){
+
+        ValidatableResponse response=this.myTweetApi.getMyUserTimeTweet(1307288019985223692l);
+        String actualMessage=response.extract().body().path("errors[0].message");
+        response.statusCode(200);
+        System.out.println(actualMessage);
+    }
+
+    @Test
     public void WeatherTest(){
     myTweetApi.weather();
 
-    }@Test
+    }
+    @Test
     public void forecastTest() {
         myTweetApi.forecast();
+
 
 
     }
