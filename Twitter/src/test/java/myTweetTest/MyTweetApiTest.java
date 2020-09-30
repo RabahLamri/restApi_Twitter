@@ -1,11 +1,12 @@
 package myTweetTest;
 
+import com.github.scribejava.apis.TwitterApi;
 import io.restassured.response.ValidatableResponse;
 import myTweets.MyTweetApi;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import static io.restassured.RestAssured.given;
 import java.util.UUID;
 
 public class MyTweetApiTest {
@@ -59,9 +60,16 @@ public class MyTweetApiTest {
         String actualTweet=response.extract().body().path("text");
         Assert.assertEquals(tweet,actualTweet);
     }
+    @Test
+    public void WeatherTest(){
+    myTweetApi.weather();
+
+    }@Test
+    public void forecastTest() {
+        myTweetApi.forecast();
 
 
+    }
 
 
-
-}
+    }

@@ -2,6 +2,7 @@ package myTweets;
 
 import base.RestAPI;
 import io.restassured.response.ValidatableResponse;
+import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
@@ -27,10 +28,10 @@ public class MyTweetApi extends RestAPI {
     }
 
     // Create a Tweet from user twitter
-    public ValidatableResponse createTweet(String tweet)  {
+    public ValidatableResponse createTweet(String tweet) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .param("status", tweet)
-                .when().post(this.baseUrl+this.CREATE_TWEET_ENDPOINT)
+                .when().post(this.baseUrl + this.CREATE_TWEET_ENDPOINT)
                 .then();
     }
 
@@ -42,5 +43,39 @@ public class MyTweetApi extends RestAPI {
                 .then();
     }
 
+    // Create a List of tweets from user's twitter with EXCEL SHEET
+    public ValidatableResponse createListTweets(String Flights) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .param("status", Flights)
+                .when().post(this.baseUrl + this.CREATE_TWEET_ENDPOINT)
+                .then();
+    }
+//******************Open Weather **********************
+
+
+    //api.openweathermap.org/data/2.5/weather? q=Bejaia & appid=1ad72609f6762e806b1c3a3398b5d82c
+    private final String base = "api.openweathermap.org/data/2.5/weather";
+    private final String q = "?Bejaia&";
+    private final String appid = "1ad72609f6762e806b1c3a3398b5d82c";
+
+
+    // GET Weather Information
+    public void weather() {
+        given().param(q + appid)
+                .when().get(base)
+                .then().statusCode(403);
+    }
+
+    //pro.openweathermap.org/data/2.5/forecast/hourly?q=Columbus,us&mode=xml&appid={84179274d8804ef8814ba6f7559c89b1}
+    private final String base1 = "pro.openweathermap.org/data/2.5/forecast/hourly?";
+    private final String q1 = "Columbus,us";
+    private final String mode="xml&";
+    private final String appid1 = "{84179274d8804ef8814ba6f7559c89b1}";
+
+    public void forecast() {
+        given().param(q + appid1)
+                .when().get(base1)
+                .then().statusCode(200);
+    }
 
 }
