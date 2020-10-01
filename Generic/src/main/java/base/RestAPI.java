@@ -13,13 +13,15 @@ public class RestAPI {
     protected Properties properties;
     protected InputStream inputStream;
     protected String baseUrl;
+    protected String baseUrl1;
 
     public RestAPI() {
         this.baseUrl = "https://api.twitter.com/1.1";
+        this.baseUrl1 = "https://upload.twitter.com/1.1";
         this.properties = new Properties();
         inputStream = null;
         try {
-            // Path of the Secret.properties file
+// Path of the Secret.properties file
             this.inputStream = new FileInputStream("../Twitter/secret.properties");
             this.properties.load(this.inputStream);
             this.apiKey = this.properties.getProperty("apiKey");
@@ -40,6 +42,4 @@ public class RestAPI {
 
 
     }
-
-
 }

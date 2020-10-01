@@ -1,15 +1,16 @@
 package myTweetTest;
 
-import com.github.scribejava.apis.TwitterApi;
+import base.RestAPI;
+import myTweets.*;
+import io.restassured.response.ResponseBody;
 import io.restassured.response.ValidatableResponse;
-import myTweets.MyTweetApi;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import static io.restassured.RestAssured.given;
+
 import java.util.UUID;
 
-public class MyTweetApiTest {
+public class MyTweetApiTest extends DataProvider {
     private MyTweetApi myTweetApi;
 
     @BeforeClass
@@ -91,10 +92,40 @@ public class MyTweetApiTest {
     @Test
     public void forecastTest() {
         myTweetApi.forecast();
-
-
-
     }
+////=======================
+
+
+
+        @Test (enabled = true)
+        public void testUserTimeTweetSuccessfully(){
+            String tweet="This is a BootCamp Tweet";
+            ValidatableResponse response= this.myTweetApi.getUserTimeTweet(tweet);
+            System.out.println(response);
+        }
+
+
+
+        @Test (enabled = true)
+        public void testUserPlaceNearTweetSuccessfully(){
+            String atUsername="@AribElhacen";
+            ValidatableResponse response= this.myTweetApi.getPlacesNear(atUsername);
+            System.out.println(response);
+        }
+
+
+        @Test (enabled = false)
+        public void testUserCanTweetAnImageSuccessfully(){
+// user send an image tweet
+            String tweet="../Users/elhacenarib/Desktop/image.png";
+            ValidatableResponse response= this.myTweetApi.createImageTweet(tweet);
+// Verify that the tweet was successful
+            response.statusCode(200);
+            String actualTweet= response.extract().body().path("image");
+            Assert.assertEquals(tweet,actualTweet);
+        }
+
+
 
 
     }
